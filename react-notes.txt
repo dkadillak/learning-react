@@ -1,0 +1,211 @@
+December 27th, 2019
+
+Remember:
+- import React from ‘react
+- export default <component>
+- {} are js objects, use dot notation when fetching fields of the object:
+- const test = {text: ‘this is cool’}
+- console.log(test.text) -> ‘this is cool’
+- comments are exactly like java (single line = ‘//‘, multi-line with ‘/* */‘)
+- you must import the .css files you are using (thanks to webpack), need .css extension
+- web pack manages the imports (you can see this in DOM where it inserts the css style tags)
+- cmd + option + 'c' to bring up developer tools in chrome on mac
+- ctrl + option + 'b' to format code in atom
+
+
+
+
+create-react-app contains all the dev tools you need for a react app
+install it with npm install -g create-react-app
+npm, or the node package manager, comes with the node js installation
+
+to make a react app:
+1. navigate to where you want to make the react folder (optional)
+2. run create-react-app <project_name> <project location>
+
+Understanding the folder structure
+package.json => specify general dependencies
+node modules => holds all dependencies, shouldn’t edit anything in here
+public => root folder that gets served by the web server. Holds only the files we can edit. Script files are editable in the src file
+index.html is the single html page you will have. If you are creating a multi page project you would create a new react app for that page
+
+<div id=‘root’></div> => where we mount the react app
+
+index.html is where we add meta tags
+
+manifest.json => there because the create-react-app gives you a react app out of the box
+
+src folder => our actual react application
+index.js
+
+App.css => defines stylings
+registerServiceWorker.js => pre cache our script files
+
+
+Understanding component basics:
+
+
+import React, { Component } from ‘react’;
+class <ClassName> extends Component {
+	render(){
+	//has to return some jsx/html code that can be rendered to the DOM and to the screen
+	}
+}
+export default App;
+
+this jsx syntax will be compiled as recursive React.createElement(element, configuration, children), one React.createElement call for each child and sub children of that child.
+
+
+
+Understanding jsx:
+jsx looks like html but isn’t. It’s just syntactical sugar.  In most cases it acts just like html.
+Since were writing in a js file there are certain keywords we can’t use. That’s why we see things like
+
+<div className=‘App></div> in jsx instead of what you would expect in html <div class=‘App’></div>
+
+also in jsx you can only return one element, i.e. everything you return needs to be wrapped in one root element in your component. This means you probably wrap everything in a <div></div> tag.
+
+Creating a functional component:
+Component folders should start with a capital letter, inside should be <folder_name>.js
+in it’s simplest form, a component is a function that returns some jsx
+uppercase naming scheme is important when naming components so react recognizes that you’re referencing a custom component
+
+Outputting dynamic content
+ When importing your custom component, you can feed it values like you would an html tag:
+	<CustomTag Value=‘val’ Value2=‘val2’/>
+props.children refers to anything passed in between custom component tags:
+	<CustomTag Value=‘lala’> here’s some plain text <CustomTag/>
+
+In your component (just a functional component):
+import React from ‘react’
+	const CustComponent = (props) => {
+
+	return (
+	<div>
+		<p> Hi i’m {props.name} </p>
+		<p> {props.children} </p>
+	<div/>
+	)
+}
+
+Understanding and Using state:
+hooks allow you to manage state with functional components
+Use functional components as often as possible because you want to handle state with care
+
+
+state is simply a property of the component class. It must be called ‘state’, but essentially it points to a js object
+when referencing state within a class based component, use this.state
+you can pass state down to functional components but functional components can’t directly edit the passed down state
+
+Handling events with methods:
+<button onClick
+note, not o’clock, must be capital ‘C’ since it’s jsx
+
+Typically you use the word ‘Handler’ in methods you aren’t directly calling, it’s simply an event handler
+
+<button onClick={this.function()}/> actually calls the function when the page is rendered, which we may or may not want.
+If you want a function to be called on the actual click, you need to pass in a reference to the function which means the button tag looks like this: <button onClick={this.function}/>
+
+list of supported events you can listen to: https://reactjs.org/docs/events.html#supported-events
+
+
+
+Manipulating the state:
+don’t do this: this.state.whatever = ‘blah’
+Use this.setState (a method inside the Component class we’re inheriting from)
+this.setState takes an object as an argument and merges that with your existing state and make changes to the DOM
+
+If state or props changes a reload is triggered (updates existing DOM in all places that needs updating)
+
+Changing state in functional components:
+useState is the most important state hook
+you call it like a function useState(arg1);  arg1 is your state
+when using react hooks, the function you use to modify state does not merge state, it replaces state.
+That means when changing state in functional components, you have to preserve all other elements of your state
+ To get around this you can have multiple useState calls that operate only on slices of your overall state.
+
+the general syntax for useState is as follows:
+
+const [stateObject, functionToOperateOnState] = useState({
+	persons: [
+		{name: ‘devin’, age: 24}
+	]
+});
+
+you could have another useState call for another slice of your state:
+
+const [stateObject2, functionToOperateOnStateObject2] = useState(‘I am a cool person’);
+which you would reference with stateObject2 since your state can be literally whatever you want, a string, an object, an int, e.t.c.
+
+
+Stateless vs stateful components:
+Every component receives props.
+Stateful component: a component that manages state (class based of functional component)
+
+Good practice to create as many stateless or ‘dumb’  or ‘presentational’ components as possible
+State components are called ‘smart’ or ‘container’ components. Only want to have a couple for ease of maintenance
+
+
+Passing Method References Between Components:
+You can pass methods that might change the state as a prop
+
+StateHandler Functions, how do we pass in arguments?
+can be done 2 ways:
+1. <button onClick={this.stateHandler.bind(this, arg1, arg2, ….. , argN} />
+2. <button onClick = {()=> this.stateHandler(arg1, arg2, … , argN)}
+
+apparently option 2 has a performance hit as React will re-render more than it needs to, so be cautious with option 2
+
+Adding Two Way Binding:
+Set the value of your text field to be props.whatever, then have your onChange method set to whatever the parent passes down to you. That way the default value is set, and changes are also reflected from the child up to the parent
+
+Styling components:
+2 ways to do it
+.css files or inline styles
+
+inline styles:
+styling is scoped to the component you are using it with, don’t have direct access to all css features.
+	const style = {
+		backgroundColor: ‘white’, (or ‘background-color’: ‘white’)
+		font: ‘inherit’,
+		border: ‘1px solid blue’,
+		padding: ‘8px’
+		cursor: ‘pointer’
+};
+
+There are some restrictions with inline styles like configuring hovering effects
+
+now in the tag you want to add style to, <button style = {style}} />
+*sidenote* with a .css class  it’s defined with .Name {} where each attribute is defined like blah: bleh; if you want to define a specific style that you will set a tag’s className to. You could also do something like div {} which would modify all dif tags globally if you import that css file
+
+if you have a const javascript object, you can still change values, you just can't add new keys.
+
+Example:
+const style = {
+	backgroundColor: 'red'
+}
+
+style.backgroundColor = 'green'
+is totally acceptable, just not style['font'] = 'inherit' (remember dot notation here too: style.font = 'inherit')
+
+you can apply multiple classnames to an element if they're separated by a space -> 'red app bold' if those are all defined in whatever .css you're importing
+A pseudo-class is a selector that selects elements that are in a specific state, e.g. they are the first element of their type, or they are being hovered over by
+the mouse pointer.
+
+radium allows you to use all psuedo selectors
+
+Media queries is a CSS3 module allowing content rendering to adapt to conditions such as screen resolution. It became a W3C recommended standard in June 2012, and is a cornerstone technology of responsive web design.
+
+tagged template literals, what the fuck!
+styled from styled-components has a function for every html element that is itself its own component. You can feed in css (including media queries) directly to the function using the tagged template literals notation.
+Example:
+
+const StyleDiv = styled.div`
+	text-align:center
+	@media(min - width : 500 px) : {
+	  width: 450 px
+	}
+`;
+
+now wrap the content you want to apply this style to with the <StyleDiv><StyleDiv/> tag
+* remember!!!!! you use BACKTICKS, these guys: ``. Don't use normal ticks, ''. Subtle as fuck! This already destroyed me
