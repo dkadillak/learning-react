@@ -208,4 +208,12 @@ const StyleDiv = styled.div`
 `;
 
 now wrap the content you want to apply this style to with the <StyleDiv><StyleDiv/> tag
-* remember!!!!! you use BACKTICKS, these guys: ``. Don't use normal ticks, ''. Subtle as fuck! This already destroyed me
+* remember!!!!! you use BACKTICKS, these guys: ``. Don't use normal ticks, ''. Subtleeeeeee! This already destroyed me
+
+Also also, with styled components, if you are passing in props then remember the syntax is as follows:
+
+const buttonStyle = styled.button`
+	background-color = ${ props => props.bool ? 'green' : 'blue'}
+`
+
+What i'm trying to show you is that it's ${} with curly braces and NOT $(). That destroyed me harder then the back ticks thing
