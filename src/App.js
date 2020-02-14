@@ -1,9 +1,7 @@
-import React, { Component, useState } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
-import Person from './Person/Person'
-
-
+import Person from './Person/Person';
+import styled from 'styled-components';
 /*
 functional App component
 const app = props => {
@@ -14,58 +12,102 @@ const app = props => {
     <h1>{state.text}</h1>
   );
 }
+background-color: $(props => props.displayNames ? 'red' : 'green');
+background-color: $(props => props.displayNames ? 'salmon' : 'lightgreen');
 */
+const StyledButton = styled.button`
+  background-color: ${props => props.blah ? 'red' : 'green'};
+  color: black;
+  padding: 8px;
+  border: 1px solid blue;
+  font: inherit;
+  cursor: pointer;
+  &:hover {
+    background-color: green;
+    color: yellow;
+  }
+`;
 
 class App extends Component {
 
   state = {
     persons: [
-      {name:'Devin', age:24},
-      {name:'Bobe', age:3123}
-    ]
+      {
+        name: 'Devin',
+        age: 24,
+        id: 'hladf'
+      }, {
+        name: 'Bobe',
+        age: 3123,
+        id: 'kajoi'
+      }, {
+        name: 'Bush Printzle',
+        age: 40,
+        id: '9ihsdl'
+      }
+    ],
+    displayNames: false
   }
 
-  nameSwitchHandler = () => {
-    //console.log('you clicked my button');
-    this.setState(
-      {
-        persons:[
-          {name:'Devi poo', age:24},
-          {name:'Bobe', age:4}
-        ]
-      }
-    );
+  textFieldChangeHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+    person.name = event.target.value;
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({persons: persons});
   }
 
-  textFieldChangeHandler = event => {
-    this.setState(
-      {
-        persons:[
-          {name:'Devi poo', age:24},
-          {name:event.target.value, age:4}
-        ]
+  nameToggleHandler = () => {
+    this.setState((prevState) => {
+      return {
+        displayNames: !prevState.displayNames
       }
-    );
+    });
+  }
+
+  deletePersonHandler = (index) => {
+    //make a copy of the persons array, don't want to modify the original reference
+    //update the state in an immutable fashion, i.e. update state without mutating the original state first.
+    const modifiedPersons = [...this.state.persons];
+    modifiedPersons.splice(index, 1);
+    this.setState({persons: modifiedPersons});
   }
 
   render() {
-    return (
-      <div className="App">
-        <button onClick={this.nameSwitchHandler}>This is a button</button>
-        <h1>Hi, i'm a react app</h1>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-          >
-          Hey yo what it do
-        </Person>
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          changed={this.textFieldChangeHandler}
-          />
-      </div>
-    );
+    let people = null;
+    let dynamicStyling = [];
+    if (this.state.persons.length <= 2) {
+      dynamicStyling.push('red');
+    }
+    if (this.state.persons.length <= 1) {
+      dynamicStyling.push('bold');
+    }
+
+    if (this.state.displayNames) {
+      people = (<div>
+        {
+          this.state.persons.map((person, index) => {
+            return (<Person name={person.name} age={person.age} changed={(event) => this.textFieldChangeHandler(event, person.id)} click={() => this.deletePersonHandler(index)} key={person.id}/>)
+          })
+        }
+      </div>);
+    }
+    //displayNames={this.state.displayNames}
+    return (<div className="App">
+      <h1>Hi, i'm a react app</h1>
+      <p className={dynamicStyling.join(' ')}>This is some text i'll change based on the number of people i'm displaying!</p>
+      <StyledButton blah={true} onClick={this.nameToggleHandler}>
+        Toggle persons
+      </StyledButton>
+      {people}
+    </div>);
   }
 }
 export default App;
