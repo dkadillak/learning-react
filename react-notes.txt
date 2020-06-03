@@ -1,11 +1,10 @@
 December 27th, 2019
 
 Remember:
-- import React from ‘react
+- import React from ‘react'
 - export default <component>
 - {} are js objects, use dot notation when fetching fields of the object:
-- const test = {text: ‘this is cool’}
-- console.log(test.text) -> ‘this is cool’
+- const test = {text: ‘this is cool’}, console.log(test.text) -> ‘this is cool’
 - comments are exactly like java (single line = ‘//‘, multi-line with ‘/* */‘)
 - you must import the .css files you are using (thanks to webpack), need .css extension
 - web pack manages the imports (you can see this in DOM where it inserts the css style tags)
@@ -99,7 +98,7 @@ you can pass state down to functional components but functional components can�
 
 Handling events with methods:
 <button onClick
-note, not o’clock, must be capital ‘C’ since it’s jsx
+note, not onclick, must be capital ‘C’ since it’s jsx
 
 Typically you use the word ‘Handler’ in methods you aren’t directly calling, it’s simply an event handler
 
@@ -140,7 +139,7 @@ which you would reference with stateObject2 since your state can be literally wh
 
 Stateless vs stateful components:
 Every component receives props.
-Stateful component: a component that manages state (class based of functional component)
+Stateful component: a component that manages state (class based or functional component)
 
 Good practice to create as many stateless or ‘dumb’  or ‘presentational’ components as possible
 State components are called ‘smart’ or ‘container’ components. Only want to have a couple for ease of maintenance
@@ -188,7 +187,7 @@ const style = {
 style.backgroundColor = 'green'
 is totally acceptable, just not style['font'] = 'inherit' (remember dot notation here too: style.font = 'inherit')
 
-you can apply multiple classnames to an element if they're separated by a space -> 'red app bold' if those are all defined in whatever .css you're importing
+you can apply multiple classnames to an element if they're separated by a space -> 'red app bold' if those are all defined in whatever .css you're importing.
 A pseudo-class is a selector that selects elements that are in a specific state, e.g. they are the first element of their type, or they are being hovered over by
 the mouse pointer.
 

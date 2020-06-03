@@ -2,19 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import Person from './Person/Person';
 import styled from 'styled-components';
-/*
-functional App component
-const app = props => {
-  const [state, modifyState] = useState({
-    text: 'this is a test'
-  });
-  return (
-    <h1>{state.text}</h1>
-  );
-}
-background-color: $(props => props.displayNames ? 'red' : 'green');
-background-color: $(props => props.displayNames ? 'salmon' : 'lightgreen');
-*/
+
 const StyledButton = styled.button`
   background-color: ${props => props.blah ? 'red' : 'green'};
   color: black;
