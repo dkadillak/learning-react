@@ -1,8 +1,10 @@
+import classes from './App.css'
 import React, {Component} from 'react';
-import './App.css';
 import Person from './Person/Person';
-import styled from 'styled-components';
 
+
+
+import styled from 'styled-components';
 const StyledButton = styled.button`
   background-color: ${props => props.blah ? 'red' : 'green'};
   color: black;
@@ -79,10 +81,14 @@ class App extends Component {
     }
 
     if (this.state.displayNames) {
-      people = (<div>
+      people = (
+      <div>
         {
           this.state.persons.map((person, index) => {
-            return (<Person name={person.name} age={person.age} changed={(event) => this.textFieldChangeHandler(event, person.id)} click={() => this.deletePersonHandler(index)} key={person.id}/>)
+            return (
+              <Person name={person.name}
+              age={person.age} changed={(event) => this.textFieldChangeHandler(event, person.id)} click={() => this.deletePersonHandler(index)} key={person.id}
+              />)
           })
         }
       </div>);

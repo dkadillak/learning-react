@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import classes from './Person.css'
+
+/*
 const StyleDiv = styled.div`
   width: 60%;
   margin: auto;
@@ -12,10 +15,10 @@ const StyleDiv = styled.div`
     width: 450px
   }
 `;
-
+*/
  const person = (props) => {
   return (
-    <StyleDiv>
+    <div classname={classes.Person}>
       <h1 onClick={props.click}>
         my name is {props.name}
         and I am {props.age}
@@ -23,7 +26,7 @@ const StyleDiv = styled.div`
       </h1>
       <p>{props.children}</p>
       <input type='text' onChange={props.changed} value={props.name}/>
-  </StyleDiv>);
+  </div>);
 }
 
 export default person;

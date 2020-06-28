@@ -216,3 +216,27 @@ const buttonStyle = styled.button`
 `
 
 What i'm trying to show you is that it's ${} with curly braces and NOT $(). That destroyed me harder then the back ticks thing
+
+
+Working with CSS modules:
+npm run eject allows you access to webpack.config.dev.js (and prod.js)
+
+you can add this part to the file:
+test: /\.css$/,
+use: [
+	require.resolve('style-loader'),
+	{
+		loader: require.resolve('css-loader'),
+		options: {
+			importLoaders: 1,
+			modules: true,  ---> this line
+			localIdentName: '[name]__[local]__[hash:base64:5]' ---> this line
+		},
+	},
+
+and also add these lines to prod.js to be able to add import classes from './App.css' into App.js
+What this does is it allows you to reference dynamic generation of unique css class names which means your css classes are scoped locally
+this means your css classes are accessible only from the files you explicitly import them from (you can have multiple definitions of the same name in different css files!)
+This addresses the fundamental global scoping problem of css and lets you keep your css and javascript separate!
+
+** note ** a later version of react scripts (2.x or greater) allows you to just name your css <name>.module.css and likewise you import classes from './<name>.module.css'. You don't have to do the npm run eject business
