@@ -1,7 +1,7 @@
 December 27th, 2019
 
 Remember:
-- import React from ‘react
+- import React from ‘react'
 - export default <component>
 - {} are js objects, use dot notation when fetching fields of the object:
 - const test = {text: ‘this is cool’}
@@ -99,7 +99,7 @@ you can pass state down to functional components but functional components can�
 
 Handling events with methods:
 <button onClick
-note, not o’clock, must be capital ‘C’ since it’s jsx
+note, not onclick, must be capital ‘C’ since it’s jsx
 
 Typically you use the word ‘Handler’ in methods you aren’t directly calling, it’s simply an event handler
 
@@ -217,3 +217,6 @@ const buttonStyle = styled.button`
 `
 
 What i'm trying to show you is that it's ${} with curly braces and NOT $(). That destroyed me harder then the back ticks thing
+
+CSS MODULES:
+look more into l8r
