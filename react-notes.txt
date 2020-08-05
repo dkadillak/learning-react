@@ -241,19 +241,36 @@ Splitting an app into components:
 	* component should be focused
 
 component lifecycle:
-	1. constructor(props)
-	2. getDerivedStateFromProps(props, state)
+	1. constructor(props) -> call super constructor, initialize state, bind methods??
+		* in class based components, access your parents state with this.props
+	2. getDerivedStateFromProps(props, state) -> static method
+		* commponentWillMount is basically the same thing except depricated
+			- componentWillReceiveProps is also depricated
+			- componentWillUpdate is also depricated
+		* rarely used
 	3. render()
 	4. render child components
-	5. componentDidMount() -> where you put http requests and such
+	5. componentDidMount() -> where you put http requests and such (called side-effects)
 
 es6 lambda function syntax: 
 	* const func = (args) => (jsx goes here);
 		- if what's inside () is one line you can omit ()
 		- put {} if there's javascript in there
 
+Component Lifecycle - Update
+	1.getDerivedStateFromProps
+	2. shouldComponentUpdate(nextProps, nextState)
+		* add more criteria for a re-render, useful bc it defaults to true and react doesn't do a deep compare props
+	3. render()
+	4. update child component props
+	5. getSnapshotBeforeUpdate(prevProps,prevState) -> ex: return user's cursor back to it's original position after updating
+	6. componentDidUpdate()
 
-
+hook you will use a shit ton:
+	- componentDidUpdate(prevProps, prevState, snapshot)
+		* fetch new data from server!
+	- componentDidMount
+	- shouldComponentUpdate(nextProps, nextState)
 
 
 
