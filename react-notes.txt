@@ -220,3 +220,40 @@ What i'm trying to show you is that it's ${} with curly braces and NOT $(). That
 
 CSS MODULES:
 look more into l8r
+
+Debugging React Apps:
+	* you can enter a debugger in react developer tools
+	* install react developer tools
+	* open developer console with SHIFT + CTRL + J
+
+ErrorBoundary:
+	- created just like stateful components
+	- componentDidCatch = (error, info) => { set state}
+		* react auto calls this on components wrapped in this tag
+		* this means that ErrorBoundary will return this.props.children (the component that the ErrorBoundary is wrapping) if componentDidCatch wasn't called, i.e. 'hasError' portion of state wasn't updated. If there was an error, return your custom error message + tag + styling
+
+
+Splitting an app into components:
+	* want just a few state managing components, and mostly presentational/dumb components
+	* all class based components are state managing, presentational components can manage state but traditionally they don't
+	* you want your class based components render method compact, not a lot of ui stuff
+
+	* component should be focused
+
+component lifecycle:
+	1. constructor(props)
+	2. getDerivedStateFromProps(props, state)
+	3. render()
+	4. render child components
+	5. componentDidMount() -> where you put http requests and such
+
+es6 lambda function syntax: 
+	* const func = (args) => (jsx goes here);
+		- if what's inside () is one line you can omit ()
+		- put {} if there's javascript in there
+
+
+
+
+
+
