@@ -273,4 +273,29 @@ hook you will use a shit ton:
 	- shouldComponentUpdate(nextProps, nextState)
 
 
+USE EFFECT
+useEffect -> basically componentDidMount and componentDidUpdate in one react lifecycle hook, runs for every render cycle
+
+takes a second argument that tells functional component to execute based on changing of state of second argument (in a persons component, execute useEffect when props.persons changes state)
+	* i.e. useEffect(()=>{
+	~some js code or sum shit~	
+	
+	},[props.person, props.blah, props.thisToo])
+
+second argument can be many items as well
+
+you can have multiple useEffect methods
+
+if you want useEffect to run when initially rendered, make that second argument an empty array
+
+you can essentially do componentWillUnmount lifecycle in functional components with the useEffect hook, where the second argument is empty constructor and 1st argument is some clean up function. This will cause cleanup to be called whenever your functional component is re-rendered
+
+HOOKS = FUNCTIONAL COMPONENT (hooks are special functions that allow you to "hook onto" react state and lifecycle features in functional components)
+
+LIFECYCLE FEATURES = CLASS BASED COMPONENT
+
+
+
+
+
 
