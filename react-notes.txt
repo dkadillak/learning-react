@@ -294,8 +294,36 @@ HOOKS = FUNCTIONAL COMPONENT (hooks are special functions that allow you to "hoo
 
 LIFECYCLE FEATURES = CLASS BASED COMPONENT
 
+When using shouldComponentUpdate:
+	- be careful comparing props, because objects are essentially pointers to a spot in memory, if you don't deep compare then you will only be comparing references. So for example if you had an array of objects in state and you went through and updated that array in place, you wouldn't re render if your shouldComponentUpdate is just comparing references. You would need a deep compare. If you are replacing that inner object array entirely, then a shouldComponentUpdate would trigger a re render because the array references are different.
+
+	- even if you don't optimize by using shouldComponentUpdate, react uses a virtual dom to figure out if it needs to render the real dom which can catch some optimization misses like using shouldComponentUpdate correctly
+
+	* you can have chrome paint flash rendering so it's easier to see what's getting rerendered in your app
+
+For functional components, when you want similar functionality as shouldComponentUpdate, you can wrap your export statement (export default name) in React.memo(); to get -> export default React.memo(name);
+	* react stores a snapshot of the component, only re renders if the input changes, otherwise just returns the snapshot
+
+** Don't always implement shouldComponentUpdate or use React.memo().. Only should be implemented if child isn't super dependent on parent **
+
+PureComponent: component that implements shouldComponentUpdate checking all props passed in and comparing it to the previous state for you. If you want that functionality then don't extend component, import and extend PureComponent
 
 
 
+HOW REACT UPDATES DOM
+	- render() does not update dom automatically
+	- compares virtual doms, the old one vs the suggested one
+	- change real dom only in places where there are differences, doesn't re render whole thing
+	* ACCESSING THE REAL DOM IS SLOW
+
+Adjacent elements:
+	* you can have adjacent elements in a return of a render by putting things into array, where each adjacent element is separated by a comma.
+	* you can also have a placeholder component:
+		- from React import 'react';
+		const placeholder = props => props.children;
+		export default placeholder;
+
+
+** The reason why you have to wrap your return in render in one tag is a javascript thing. Jsx really just resolves to React.createElement() calls, and you can't return multiple React.createElement calls. The moment you wrap everything in one tag, you're technically only returning one React.createElement call.
 
 
