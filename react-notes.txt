@@ -322,8 +322,157 @@ Adjacent elements:
 		- from React import 'react';
 		const placeholder = props => props.children;
 		export default placeholder;
-
+	* react provides a placeholder object for you if you want, it's called a Fragment
+		- import {React, Fragment}
 
 ** The reason why you have to wrap your return in render in one tag is a javascript thing. Jsx really just resolves to React.createElement() calls, and you can't return multiple React.createElement calls. The moment you wrap everything in one tag, you're technically only returning one React.createElement call.
 
+Higher Order Component:
+	- wraps another component, maybe provides some logic like error handling or styling or something
+	- convention to start name of HOC with 'With'
 
+	- another way to do it:
+
+create a javascript function that returns a higher order component:
+	import React from "react";
+
+	const withClass = (WrappedComponent, arg1,.....,argN) => {
+		return props => (
+			<WrappedComponent Arg1=arg1, ...., ArgN=argN/>
+		);
+	};
+	
+	export default withClass;
+
+Now keep in mind this is a javascript function! Here's how you use it:
+
+In the child level component:
+
+import {React, Component} from "react";
+import withClass from "withClass";
+
+class App extends Component{
+render(){
+	return ();
+}
+
+}
+	
+	
+export default withClass(App);
+
+
+It is suggested that you use the <placeHolder> or <Fragment> tag if you'r HOC is adding styling or more jsx, but use the function style if you're adding some js logic/sending analytics data
+It's semantics but still
+
+forwarding props dynamically from HOC: <parTag {...props}/>
+
+USING SETSTATE INCORRECTLY:
+	- setState doesn't immediately trigger a re-render; it's synchronouse! React schedules a render when react has the resources, therefore depending on this.state for last state is not reliable. You should then use the following arguments in setState:
+
+this.setState((prevState,props) => {
+
+	return {new state based on previous state goes here!};
+});
+
+Using PropTypes:
+	- npm install --save prop-types
+	- import PropTypes from "prop-types"
+	- now before your export statement, set up the <ComponentName>.propTypes object:
+		Person.propTypes = {
+			click: PropTypes.func,
+			name: PropTypes.string,
+			age: PropTypes.number,
+			changes: PropTypes.func			
+		};
+	- you can even specify PropTypes.func further by specifying what the func should take in as arguments
+
+References Switches:
+	- can pass into any component:
+		ref={(reference_to_current_component) => {do something with that reference!!!!}}
+	- only works in class based components
+
+	CAN ALSO DO THIS:
+		- in constructor, can create a class variable to track your current reference
+		constructor(props) {
+			super(props);
+			this.<componentName>Ref = React.createRef();
+		}
+		
+		now in what you're going to render you can assign the reference:
+		<tag ref = {this.<componentName>Ref} /n
+		
+		to access the most recent component of type <componentName>Ref:
+			- this.<componentName>Ref.current
+			- now you can call .focus() on this or whatever
+
+
+USING REFS IN FUNCTIONAL COMPONENTS
+	- there is a useRef hook you can use, import it from 'react'
+	- create a const var = useRef(null);
+	- now pass ref into what you're rendering, set it to {var} like before
+	- then in useEffect() hook you can depend on having a reference to your functional component that you can do stuff with!
+
+
+UNDERSTANDING PROP CHAINING PROBLEMS
+	- React context api helps us solve this issue
+	- "globally" available javascript object, passable without using props, but could just be a string, number, e.t.c.
+	- globally isn't absolutely correct because you specify which classes can see a given context
+
+ CREATE CONTEXT:
+	import React from 'react';
+	
+	const contextName = React.createContext(<variable your context holds>);
+	
+	export default contextName;
+	
+USING CONTEXT:
+	- import context where you need it
+	- if you're establishing the context values, then wrap the jsx in:
+		 <ContextName.Provider value={{isVerified:True, login=this.loginHandler}}>
+		</ContextName.Provider>
+
+		* in this example my context is a js obj, value={<initialize whatever you have in your context>}
+	- now this is the super cool part. Wherever you want to consume the context, import the context then wrap jsx code you need the context in with:
+
+		<ContextName.Consumer>
+		{(context) => return(
+			<jsx that needs context.isVerified/context.login goes here />	
+		);}
+		</ContextName.Consumer>
+	- it's important to note that inside Context.Consumer tag, you define a js function that returns some jsx! Keep in mind we're still in the render() method 
+	- only changing something in a context object wouldn't trigger a re render cycle
+
+ALTERNATE WAY OF CONSUMING CONTEXT IN CLASS BASED COMPONENT:
+	- useful if you want whole component to have access to context
+	- declare static variable, set it to the context you imported
+	- you now have access to context value with this.context
+	- just use this for simplicity and bc it gives whole component access
+
+CONSUMING CONTEXT IN FUNCTIONAL COMPONENTS:
+	- import useContext hook
+	- import context
+	- set variable inside of functional component = useContext(importedContext);
+	- now variable holds value of the importedContext contents!
+
+** NOTE, REDUX HELPS WITH PROPS CHAINING JUST LIKE CONTEXT **
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
