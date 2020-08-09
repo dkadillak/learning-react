@@ -377,7 +377,7 @@ this.setState((prevState,props) => {
 
 Using PropTypes:
 	- npm install --save prop-types
-	- import PropTypes from "prop-types"
+	- import Proptypes from "prop-types"
 	- now before your export statement, set up the <ComponentName>.propTypes object:
 		Person.propTypes = {
 			click: PropTypes.func,
@@ -462,10 +462,11 @@ HOW TO PLAN A REACT APPLICATION
 	2. application state (what data do i need to keep track of)
 	3. components vs. containers (which components should be stateful/stateless)
 
-BURGER APP
-
-PLAN
-	
+USEFUL KNOWLEDGE
+() is for jsx
+{} is for js logic
+ALT + J = open dev tools in chrome
+CTRL + F5 = reload and clear cache
 
 
 
