@@ -387,7 +387,7 @@ Using PropTypes:
 		};
 	- you can even specify PropTypes.func further by specifying what the func should take in as arguments
 
-References Switches:
+Reference Switches:
 	- can pass into any component:
 		ref={(reference_to_current_component) => {do something with that reference!!!!}}
 	- only works in class based components
@@ -457,9 +457,15 @@ CONSUMING CONTEXT IN FUNCTIONAL COMPONENTS:
 
 ** NOTE, REDUX HELPS WITH PROPS CHAINING JUST LIKE CONTEXT **
 
+HOW TO PLAN A REACT APPLICATION
+	1. plan component tree/structure (what parts of my project do I have)
+	2. application state (what data do i need to keep track of)
+	3. components vs. containers (which components should be stateful/stateless)
 
+BURGER APP
 
-
+PLAN
+	
 
 
 
