@@ -467,6 +467,8 @@ USEFUL KNOWLEDGE
 {} is for js logic
 ALT + J = open dev tools in chrome
 CTRL + F5 = reload and clear cache
+stateful component: caps case LikeThisRightHere
+stateless components: lower case LikeThisRightHere
 
 
 
