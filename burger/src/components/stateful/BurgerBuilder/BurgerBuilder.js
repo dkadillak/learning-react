@@ -3,6 +3,8 @@ import React, {Component} from "react";
 import Aux from "../../hoc/Aux";
 import Burger from "../../Burger/Burger";
 import BuildControls from "../../Burger/BuildControls/BuildControls";
+import Modal from "../../UI/Modal/Modal";
+import OrderSummary from "../../Burger/OrderSummary/OrderSummary";
 
 const INGREDIENT_PRICES = {
     salad: .5,
@@ -43,7 +45,7 @@ class BurgerBuilder extends Component{
 
         if (oldCount <= 0){ return; }
         else {
-        const newIngredients = [...this.state.ingredients];
+        const newIngredients = {...this.state.ingredients};
         newIngredients[type] = oldCount - 1;
 
         const newPrice = this.state.totalPrice - INGREDIENT_PRICES[type];
@@ -62,11 +64,16 @@ class BurgerBuilder extends Component{
         }
         return (
             <Aux>
+                <Modal>
+                    <OrderSummary ingredients={this.state.ingredients}/>
+                </Modal>
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls 
                 ingredientAdded={this.addIngredientHandler}
                 ingredientRemoved={this.removeIngredientHandler}
-                disabledButtons={disabledButtons}/>
+                disabledButtons={disabledButtons}
+                price={this.state.totalPrice}
+                canOrder={Object.values(this.state.ingredients).reduce((a,b) => a+b,0) === 0}/>
             </Aux>
         );
     }

@@ -14,10 +14,8 @@ const burger = (props) => {
         return arr.concat(el)
     }, []);
 
-    console.log(transformedIngredients);
     if(transformedIngredients.length === 0){
-        transformedIngredients = <p>You're burger currently: SUCKS ASS
-            put a dag on ingredient on the gee dag on burger ol dag on thing </p>
+        transformedIngredients = <p>You're burger currently is empty! </p>
     }
     return (
         <div className={classes.Burger}>

@@ -13,13 +13,16 @@ const buildControls = (props) => {
 
     return (
         <div className={classes.BuildControls}>
+            <p>Current price is <strong>{props.price.toFixed(2)}</strong></p>
             {controls.map( el => (
                 <BuildControl 
                 label={el.label}
                 added={() => props.ingredientAdded(el.type)}
                 removed={() => props.ingredientRemoved(el.type)}
-                disable={props.disabledButtons[el.type]}/>
+                disable={props.disabledButtons[el.type]}
+                key={el.label}/>
            ))}
+           <button className={classes.OrderButton} disabled={props.canOrder}>ORDER NOW</button>
         </div>
     );
 
