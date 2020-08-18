@@ -30,7 +30,14 @@ class BurgerBuilder extends Component{
     }
 
     orderSummaryHandler = () => {
-        this.setState((prevState) => {readyToOrder: !prevState.readyToOrder});
+        console.log("Changing readyToOrder state");
+
+        this.setState((prevState) => {
+            return {
+                readyToOrder: !prevState.readyToOrder
+            }
+        });
+
     }
 
     addIngredientHandler = (type) => {
@@ -84,8 +91,10 @@ class BurgerBuilder extends Component{
                 ingredientRemoved={this.removeIngredientHandler}
                 disabledButtons={disabledButtons}
                 price={this.state.totalPrice}
-                canOrder={Object.values(this.state.ingredients).reduce((a,b) => a+b,0) === 0}
-                readyToOrderHandler = {() => this.orderSummaryHandler}/>
+                disable={Object.values(this.state.ingredients).reduce((a,b) => a+b,0) === 0}
+                click={this.orderSummaryHandler}
+                readyToOrder={this.state.readyToOrder}
+                />
             </Aux>
         );
     }
