@@ -24,8 +24,13 @@ class BurgerBuilder extends Component{
                 meat: 0,
                 cheese: 0
             },
-            totalPrice: 4
+            totalPrice: 4,
+            readyToOrder: false
         }
+    }
+
+    orderSummaryHandler = () => {
+        this.setState((prevState) => {readyToOrder: !prevState.readyToOrder});
     }
 
     addIngredientHandler = (type) => {
@@ -62,10 +67,16 @@ class BurgerBuilder extends Component{
         for (let el in disabledButtons){
             disabledButtons[el] = disabledButtons[el] <=0;
         }
+
+        const orderSummary = (
+            this.state.readyToOrder ? 
+            <OrderSummary ingredients={this.state.ingredients}/> : 
+            <p>Order Summary will display here when you're ready to submit your order!</p>
+        );
         return (
             <Aux>
                 <Modal>
-                    <OrderSummary ingredients={this.state.ingredients}/>
+                    {orderSummary}
                 </Modal>
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls 
@@ -73,7 +84,8 @@ class BurgerBuilder extends Component{
                 ingredientRemoved={this.removeIngredientHandler}
                 disabledButtons={disabledButtons}
                 price={this.state.totalPrice}
-                canOrder={Object.values(this.state.ingredients).reduce((a,b) => a+b,0) === 0}/>
+                canOrder={Object.values(this.state.ingredients).reduce((a,b) => a+b,0) === 0}
+                readyToOrderHandler = {() => this.orderSummaryHandler}/>
             </Aux>
         );
     }
