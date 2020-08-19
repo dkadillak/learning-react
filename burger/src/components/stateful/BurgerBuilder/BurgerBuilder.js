@@ -75,15 +75,10 @@ class BurgerBuilder extends Component{
             disabledButtons[el] = disabledButtons[el] <=0;
         }
 
-        const orderSummary = (
-            this.state.readyToOrder ? 
-            <OrderSummary ingredients={this.state.ingredients}/> : 
-            <p>Order Summary will display here when you're ready to submit your order!</p>
-        );
         return (
             <Aux>
-                <Modal>
-                    {orderSummary}
+                <Modal show={this.state.readyToOrder}>
+                    <OrderSummary ingredients={this.state.ingredients}/> 
                 </Modal>
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls 
@@ -92,7 +87,7 @@ class BurgerBuilder extends Component{
                 disabledButtons={disabledButtons}
                 price={this.state.totalPrice}
                 disable={Object.values(this.state.ingredients).reduce((a,b) => a+b,0) === 0}
-                click={this.orderSummaryHandler}
+                click={() => this.orderSummaryHandler()}
                 readyToOrder={this.state.readyToOrder}
                 />
             </Aux>
