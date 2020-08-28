@@ -11,6 +11,7 @@ Remember:
 - web pack manages the imports (you can see this in DOM where it inserts the css style tags)
 - cmd + option + 'c' to bring up developer tools in chrome on mac
 - ctrl + option + 'b' to format code in atom
+- component libraries are a thing!
 
 
 
